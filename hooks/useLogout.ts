@@ -7,7 +7,6 @@ export const useLogout = () => {
   const logout = () => {
     dispatch(clearAuth());
     localStorage.removeItem("authToken");
-    localStorage.removeItem("refreshToken");
   };
 
   return logout;

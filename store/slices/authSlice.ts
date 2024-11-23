@@ -34,17 +34,11 @@ export const initAuth = createAsyncThunk(
     } else {
       localStorage.removeItem("authToken");
       // Token was expired, try to refresh
-      const restoreToken = localStorage.getItem("refreshToken");
-
-      if (restoreToken) {
-        const newToken = await refreshToken(restoreToken);
-        if (newToken) {
-          localStorage.setItem("authToken", newToken);
-          return newToken;
-        } else {
-          // Refresh token was expired too
-          localStorage.removeItem("refreshToken");
-        }
+      // would be taken from browser cookies
+      const newToken = await refreshToken();
+      if (newToken) {
+        localStorage.setItem("authToken", newToken);
+        return newToken;
       }
 
       // Token is invalid and cannot be refreshed

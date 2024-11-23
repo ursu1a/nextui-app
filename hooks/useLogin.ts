@@ -26,7 +26,6 @@ export const useLogin = () => {
       setIsLoading(false);
       if (rememberMe) {
         localStorage.setItem("authToken", token);
-        localStorage.setItem("refreshToken", refresh_token);
       }
       return { success: true, message: "Login successful" };
     } catch (error) {

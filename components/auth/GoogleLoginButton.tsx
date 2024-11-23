@@ -24,12 +24,11 @@ export const GoogleLoginButton = () => {
     if (authWindow) {
       const messageListener = (event: MessageEvent) => {
         if (event.origin === API_BASE_URL) {
-          const { access_token: token, refresh_token } = event.data;
+          const { access_token: token } = event.data;
 
           if (token) {
             dispatch(setAuth({ token }));
             localStorage.setItem("authToken", token);
-            localStorage.setItem("refreshToken", refresh_token);
 
             window.removeEventListener("message", messageListener);
             authWindow.close();

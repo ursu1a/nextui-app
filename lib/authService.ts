@@ -16,13 +16,9 @@ export const validateToken = async (token: string): Promise<boolean> => {
   }
 };
 
-export const refreshToken = async (
-  refresh_token: string
-): Promise<string | null> => {
+export const refreshToken = async (): Promise<string | null> => {
   try {
-    const response = await apiClient.post("/api/auth/refresh", {
-      refresh_token,
-    });
+    const response = await apiClient.post("/api/auth/refresh", {});
     if (response.status === 200) {
       return response.data.access_token;
     }
@@ -48,7 +44,7 @@ export const openOAuthWindow = (
   );
 };
 
-// This method is used for include/exclude interceptor with authentication header 
+// This method is used for include/exclude interceptor with authentication header
 // to each apiClient instance call when it's needed by authorization state
 let interceptorId: number | null = null;
 
