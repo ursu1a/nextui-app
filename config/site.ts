@@ -99,10 +99,11 @@ export const siteConfig = {
       name: "Name",
       create_account: "Create account",
       have_an_account: "Have an account?",
-    },
+    },    
     email: "Email",
     password: "Password",
     google: "Google",
+    email_validation: "Email validation",
   },
   validators: {
     name_required: "Name is required",
@@ -111,4 +112,7 @@ export const siteConfig = {
     email_format: "Email format is wrong",
     password_format: "Password is not strong",
   },
+  errors: {
+    email_validation_token_empty: "The email is not validated, please follow the instructions in the mailbox"
+  }
 };

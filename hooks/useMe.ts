@@ -1,6 +1,6 @@
 import apiClient from "@/api/apiClient";
 import { useAppDispatch } from "./reduxHooks";
-import { setUser } from "@/store/slices/authSlice";
+import { clearAuth, setAuth, setUser } from "@/store/slices/authSlice";
 
 export const useMe = () => {
   const dispatch = useAppDispatch();
@@ -14,6 +14,7 @@ export const useMe = () => {
       }
       return null;
     } catch (err) {
+      dispatch(clearAuth());
       return null;
     }
   };

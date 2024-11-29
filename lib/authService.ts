@@ -18,7 +18,7 @@ export const validateToken = async (token: string): Promise<boolean> => {
 
 export const refreshToken = async (): Promise<string | null> => {
   try {
-    const response = await apiClient.post("/api/auth/refresh", {});
+    const response = await apiClient.post("/api/auth/refresh");
     if (response.status === 200) {
       return response.data.access_token;
     }
