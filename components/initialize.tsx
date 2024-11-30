@@ -4,7 +4,6 @@ import { useAuth } from "@/hooks/useAuth";
 import { useMe } from "@/hooks/useMe";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import { initAuth } from "@/store/slices/authSlice";
-import apiClient from "@/api/apiClient";
 
 export default function CustomElements() {
   const dispatch = useAppDispatch();

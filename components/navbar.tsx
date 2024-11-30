@@ -1,6 +1,5 @@
 "use client";
 import clsx from "clsx";
-import { useEffect } from "react";
 import {
   Navbar as NextUINavbar,
   NavbarContent,
@@ -14,25 +13,17 @@ import { Button } from "@nextui-org/button";
 import { Kbd } from "@nextui-org/kbd";
 import { Link } from "@nextui-org/link";
 import { Input } from "@nextui-org/input";
-import { User } from "@nextui-org/user";
 import { link as linkStyles } from "@nextui-org/theme";
 import NextLink from "next/link";
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { SearchIcon, Logo } from "@/components/icons";
-import {
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-} from "@nextui-org/dropdown";
 import { useAuth } from "@/hooks/useAuth";
 import { useLogout } from "@/hooks/useLogout";
-import { Avatar } from "@nextui-org/avatar";
-import { siteConfig as strings } from "@/config/site";
+import AvatarMenu from "./navbar/AvatarMenu";
 
 export const Navbar = () => {
-  const { user, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
   const logout = useLogout();
 
   const searchInput = (
@@ -54,38 +45,6 @@ export const Navbar = () => {
       }
       type="search"
     />
-  );
-
-  const avatarMenu = (isAuthenticated: boolean) => (
-    <Dropdown>
-      <DropdownTrigger>
-        {isAuthenticated ? (
-          <User
-            as="button"
-            avatarProps={{
-              isBordered: true,
-              src: user?.Picture,
-            }}
-            description={user?.Email}
-            name={user?.Name}
-          />
-        ) : (
-          <Avatar />
-        )}
-      </DropdownTrigger>
-      {isAuthenticated ?
-      <DropdownMenu aria-label="Avatar Menu" variant="flat">
-        <DropdownItem isReadOnly key="profile" className="h-14 gap-2">
-          <p className="font-bold">Signed in as</p>
-          <p className="font-bold">{user?.Email}</p>
-        </DropdownItem>
-        <DropdownItem onClick={logout}>Logout</DropdownItem>
-      </DropdownMenu>
-      : <DropdownMenu aria-label="Login Menu" variant="flat">
-          <DropdownItem href="/login" title={strings.auth.login.log_in} />
-          <DropdownItem href="/register" title={strings.auth.register.register} />
-        </DropdownMenu>}
-    </Dropdown>
   );
 
   const navMenuItems = siteConfig.navMenuItems.filter(function (item) {
@@ -138,7 +97,7 @@ export const Navbar = () => {
           <ThemeSwitch />
         </NavbarItem>
         <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
-        {avatarMenu(isAuthenticated)}
+        <AvatarMenu />
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
