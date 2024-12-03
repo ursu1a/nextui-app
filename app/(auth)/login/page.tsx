@@ -100,7 +100,7 @@ export default function LoginPage() {
           >
             {strings.auth.login.remember_me}
           </Checkbox>
-          <Link href="/" className="text-default-400" size="sm">
+          <Link href="/restore-password" className="text-default-400" size="sm">
             {strings.auth.login.forgot_password}
           </Link>
           <Button

@@ -20,7 +20,7 @@ export const useLogin = () => {
     try {
       setIsLoading(true);
       const response = await apiClient.post("/api/login", credentials);
-      const { access_token: token, refresh_token } = response.data;
+      const { access_token: token } = response.data;
       dispatch(setAuth({ token }));
       
       setIsLoading(false);

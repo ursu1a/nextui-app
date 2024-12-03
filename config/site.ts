@@ -99,11 +99,19 @@ export const siteConfig = {
       name: "Name",
       create_account: "Create account",
       have_an_account: "Have an account?",
-    },    
+    },
     email: "Email",
     password: "Password",
     google: "Google",
     email_validation: "Email validation",
+    restore_password: "Restore password",
+    restore_password_description:
+      "Please enter your email address and you will get an instructions to reset your password",
+    send: "Send",
+    update_password: "Update password",
+    new_password: "New password",
+    new_password_repeat: "New password confirm",
+    confirm: "Confirm",
   },
   validators: {
     name_required: "Name is required",
@@ -111,8 +119,12 @@ export const siteConfig = {
     password_required: "Password is required",
     email_format: "Email format is wrong",
     password_format: "Password is not strong",
+    passwords_not_equal: "Passwords do not match",
   },
   errors: {
-    email_validation_token_empty: "The email is not validated, please follow the instructions in the mailbox"
-  }
+    email_validation_token_empty:
+      "The email is not validated, please follow the instructions in the mailbox",
+    restore_token_empty:
+      "Restore password link is wrong, please follow the instructions in the mailbox",
+  },
 };
