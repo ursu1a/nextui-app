@@ -25,10 +25,13 @@ export const initAuth = createAsyncThunk(
   "auth/initAuth",
   async (_, { rejectWithValue }) => {
     const savedToken = localStorage.getItem("authToken");
-    if (!savedToken) return null;
+    if (!savedToken) {
+      return rejectWithValue("Token is missing");
+    }
 
     // Check token from local storage
     const isValid = await validateToken(savedToken);
+
     if (isValid) {
       return savedToken;
     } else {
@@ -70,6 +73,7 @@ const authSlice = createSlice({
       .addCase(
         initAuth.fulfilled,
         (state, action: PayloadAction<string | null>) => {
+          state.isAuthenticated = false;
           if (action.payload) {
             state.token = action.payload;
             state.isAuthenticated = true;

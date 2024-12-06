@@ -4,9 +4,12 @@ import { useAuth } from "@/hooks/useAuth";
 import { useMe } from "@/hooks/useMe";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import { initAuth } from "@/store/slices/authSlice";
+import { useApp } from "@/hooks/useApp";
+import LoadingProgress from "./feedback/LoadingProgress";
 
-export default function CustomElements() {
+export default function () {
   const dispatch = useAppDispatch();
+  const { isLoading } = useApp();
   const { isAuthenticated } = useAuth();
   const getMe = useMe();
 
@@ -20,5 +23,5 @@ export default function CustomElements() {
     }
   }, [isAuthenticated]);
 
-  return <></>;
+  return <>{isLoading && <LoadingProgress />}</>;
 }

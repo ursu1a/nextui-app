@@ -1,3 +1,5 @@
+import { title } from "process";
+
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
@@ -112,6 +114,29 @@ export const siteConfig = {
     new_password: "New password",
     new_password_repeat: "New password confirm",
     confirm: "Confirm",
+  },
+  account: {
+    title: "My Account",
+    description: "Account settings",
+    signed_in_as: "Signed in as",
+    logout: "Logout",
+    username: "Username",
+    username_placeholder: "Enter your name",
+    email: "Email",
+    email_placeholder: "Enter your email",
+    password: "Password",
+    password_placeholder: "Enter your password",
+    save_changes: "Save changes",
+    remove_account: "Remove account",
+  },
+  feedback: {
+    confirm_action: {
+      title: "Confirm the action",
+      text1: "Do you really want to ",
+      text2: "This action cannot be undone.",
+      actionYes: "Yes",
+      actionNo: "No",
+    }
   },
   validators: {
     name_required: "Name is required",

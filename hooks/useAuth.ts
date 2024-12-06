@@ -1,5 +1,5 @@
 // This hook returns user information and authentication state
-import { useAppSelector } from "../hooks/reduxHooks";
+import { useAppSelector } from "./reduxHooks";
 
 export const useAuth = () => {
   const { token, user, isAuthenticated } = useAppSelector(

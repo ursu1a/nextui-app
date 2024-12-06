@@ -42,10 +42,10 @@ export default function RootLayout({
         )}
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-          <CustomElements />
           <AuthRoute />
           <div className="relative flex flex-col h-screen">
             <Navbar />
+            <CustomElements />
             <main className="container mx-auto max-w-7xl pt-8 md:pt-16 px-6 flex-grow">
               {children}
             </main>

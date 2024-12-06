@@ -2,6 +2,7 @@ import {
   Dropdown,
   DropdownItem,
   DropdownMenu,
+  DropdownSection,
   DropdownTrigger,
 } from "@nextui-org/dropdown";
 import { Avatar } from "@nextui-org/avatar";
@@ -33,11 +34,16 @@ const AvatarMenu = () => {
       </DropdownTrigger>
       {isAuthenticated ? (
         <DropdownMenu aria-label="Avatar Menu" variant="flat">
-          <DropdownItem isReadOnly key="profile" className="h-14 gap-2">
-            <p className="font-bold">Signed in as</p>
-            <p className="font-bold">{user?.Email}</p>
-          </DropdownItem>
-          <DropdownItem onClick={logout}>Logout</DropdownItem>
+          <DropdownSection showDivider>
+            <DropdownItem isReadOnly key="profile" className="h-14 gap-2">
+              <p className="font-bold">{strings.account.signed_in_as}</p>
+              <p className="font-bold">{user?.Email}</p>
+            </DropdownItem>
+            <DropdownItem isReadOnly key="settings" href="/account">
+              {strings.account.title}
+            </DropdownItem>
+          </DropdownSection>
+          <DropdownItem onClick={logout}>{strings.account.logout}</DropdownItem>
         </DropdownMenu>
       ) : (
         <DropdownMenu aria-label="Login Menu" variant="flat">

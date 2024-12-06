@@ -33,7 +33,10 @@ module.exports = {
           },
           background: {
             DEFAULT: '#121A21',
-            foreground: "#ffffff"
+            foreground: "#ffffff",
+          },
+          main: {
+            DEFAULT: '#1F2937'
           }
         }
       },

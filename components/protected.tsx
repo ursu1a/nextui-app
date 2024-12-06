@@ -1,18 +1,32 @@
 "use client";
-import { useEffect } from "react";
-import { useAuth } from "@/hooks/useAuth";
+import { ReactNode, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/useAuth";
+import { useApp } from "@/hooks/useApp";
 
-const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+export interface ProtectedRouteProps {
+  children: ReactNode;
+  hideContent?: boolean;
+}
+
+const ProtectedRoute = ({
+  children,
+  hideContent = false,
+}: ProtectedRouteProps) => {
+  const { isLoading } = useApp();
   const { isAuthenticated } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (isLoading === false && !isAuthenticated) {
       // Redirect to login page
       router.push("/login");
     }
-  }, [isAuthenticated]);
+  }, [isLoading, isAuthenticated]);
+
+  if (hideContent && (isLoading || !isAuthenticated)) {
+    return null;
+  }
 
   return <>{children}</>;
 };
