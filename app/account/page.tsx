@@ -89,7 +89,7 @@ export default function AccountPage() {
           closeHandler={() => setNeedConfirm(false)}
           confirmHandler={onRemoveConfirm}
         />
-        <div className="bg-main p-6 lg:p-8 rounded-lg">
+        <div className="bg-main p-6 lg:p-8 rounded-lg shadow-medium">
           <div className="mb-5 lg:mb-8">
             <p className={title({ size: "sm" })}>
               {strings.account.description}
