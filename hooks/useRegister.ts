@@ -1,6 +1,7 @@
 import { useState } from "react";
-import apiClient from "@/api/apiClient";
+import apiClient, { errorMessage } from "@/api/apiClient";
 import { ApiResponse } from "@/types";
+import { AxiosError } from "axios";
 
 interface NewUser {
   name: string;
@@ -19,24 +20,12 @@ export const useRegister = () => {
     } catch (error) {
       return {
         success: false,
-        message: `Register error: ${error}}`,
+        message: `Register error: ${errorMessage(error)}`,
       };
     } finally {
       setIsLoading(false);
     }
   };
 
-  const verifyEmail = async (token: string): Promise<ApiResponse> => {
-    try {
-      setIsLoading(true);
-      await apiClient.get("/api/verify-email", { params: { token } });
-      return { success: true, message: "Email is verified successfully" };
-    } catch (error) {
-      return { success: false, message: "Email verification error" };
-    } finally {
-      setIsLoading(true);
-    }
-  };
-
-  return { signup, verifyEmail, isLoading };
+  return { signup, isLoading };
 };

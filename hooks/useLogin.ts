@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAppDispatch } from "./reduxHooks";
 import { setAuth } from "../store/slices/authSlice";
-import apiClient from "@/api/apiClient";
+import apiClient, { errorMessage } from "@/api/apiClient";
 import { ApiResponse } from "@/types";
 
 interface LoginCredentials {
@@ -32,7 +32,7 @@ export const useLogin = () => {
       setIsLoading(false);
       return {
         success: false,
-        message: `Login error: ${error}}`,
+        message: `Login error: ${errorMessage(error)}`,
       };
     }
   };

@@ -1,5 +1,6 @@
 "use client";
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import { useMe } from "@/hooks/useMe";
 import { useAppDispatch } from "@/hooks/reduxHooks";
@@ -8,14 +9,29 @@ import { useApp } from "@/hooks/useApp";
 import LoadingProgress from "./feedback/LoadingProgress";
 
 export default function () {
+  const pathname = usePathname();
   const dispatch = useAppDispatch();
   const { isLoading } = useApp();
   const { isAuthenticated } = useAuth();
   const getMe = useMe();
 
+  const checkPathname = (pathname: string) => {
+    const authPaths = [
+      "login",
+      "register",
+      "restore-password",
+      "update-password",
+      "verify-email",
+    ];
+    return authPaths.every((authPath) => `/${authPath}` !== pathname);
+  };
+
   useEffect(() => {
-    dispatch(initAuth());
-  }, [dispatch]);
+    if (checkPathname(pathname)) {
+      // prevent initialize auth until some authorization processes
+      dispatch(initAuth());
+    }
+  }, [pathname]);
 
   useEffect(() => {
     if (isAuthenticated) {

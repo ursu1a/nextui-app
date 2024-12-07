@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 const apiClient = axios.create({
   headers: {
@@ -6,5 +6,7 @@ const apiClient = axios.create({
   },
   withCredentials: true,
 });
+
+export const errorMessage = (error: AxiosError | any) => error?.response ? error.response.data : error;
 
 export default apiClient;
