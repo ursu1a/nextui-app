@@ -40,7 +40,7 @@ export default function LoginPage() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormInputs>({ resolver: yupResolver(schema as any) });
+  } = useForm<IFormInputs>({ resolver: yupResolver(schema as yup.AnyObjectSchema) });
 
   async function onSubmit(data: IFormInputs) {    
     const result = await login(

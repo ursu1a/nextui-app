@@ -1,6 +1,6 @@
 import apiClient from "@/api/apiClient";
 import { useAppDispatch } from "./reduxHooks";
-import { clearAuth, setAuth, setUser } from "@/store/slices/authSlice";
+import { clearAuth, setUser } from "@/store/slices/authSlice";
 
 export const useMe = () => {
   const dispatch = useAppDispatch();

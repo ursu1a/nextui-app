@@ -7,6 +7,7 @@ import { useAppDispatch } from "@/hooks/reduxHooks";
 import { initAuth } from "@/store/slices/authSlice";
 import { useApp } from "@/hooks/useApp";
 import LoadingProgress from "./feedback/LoadingProgress";
+import { setUser } from "@/store/slices/userSlice";
 
 export default function () {
   const pathname = usePathname();
@@ -17,13 +18,13 @@ export default function () {
 
   const checkPathname = (pathname: string) => {
     const authPaths = [
-      "login",
-      "register",
-      "restore-password",
-      "update-password",
-      "verify-email",
+      "/login",
+      "/register",
+      "/restore-password",
+      "/update-password",
+      "/verify-email",
     ];
-    return authPaths.every((authPath) => `/${authPath}` !== pathname);
+    return !authPaths.some((authPath) => authPath === pathname);
   };
 
   useEffect(() => {
@@ -35,7 +36,10 @@ export default function () {
 
   useEffect(() => {
     if (isAuthenticated) {
-      getMe();
+      getMe().then((userData) => dispatch(setUser({
+        name: userData?.Name,
+        email: userData?.Email,
+      })));
     }
   }, [isAuthenticated]);
 

@@ -41,7 +41,7 @@ export default function RegisterPage() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormInputs>({ resolver: yupResolver(schema as any) });
+  } = useForm<IFormInputs>({ resolver: yupResolver(schema) });
 
   async function onSubmit(data: IFormInputs) {
     const result = await signup(data);

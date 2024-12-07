@@ -19,6 +19,7 @@ export default function ConfirmModal({
   shown,
   actionText,
   closeHandler,
+  confirmHandler
 }: ConfirmActionModalProps) {
   return (
     <Modal
@@ -40,7 +41,7 @@ export default function ConfirmModal({
           </p>
         </ModalBody>
         <ModalFooter>
-          <Button color="danger">
+          <Button color="danger" onPress={confirmHandler}>
             {strings.feedback.confirm_action.actionYes}
           </Button>
           <Button color="default" variant="light" onPress={closeHandler}>
