@@ -8,7 +8,7 @@ import { ApiResponse } from "@/types";
 export const useAuth = () => {
   const dispatch = useAppDispatch();
   const debounce = debounceDispatch(dispatch);
-  
+
   const { token, user, isAuthenticated } = useAppSelector(
     (state) => state.auth
   );
@@ -19,11 +19,16 @@ export const useAuth = () => {
       await apiClient.get("/api/verify-email", { params: { token } });
       return { success: true, message: "Email is verified successfully" };
     } catch (error) {
-      return { success: false, message: errorMessage(error)};
+      return { success: false, message: errorMessage(error) };
     } finally {
       debounce(setLoading(false));
     }
   };
 
-  return { token, user, isAuthenticated, verifyEmail };
+  return {
+    token,
+    user,
+    isAuthenticated,
+    verifyEmail,
+  };
 };

@@ -8,7 +8,7 @@ import { ThemeProviderProps } from "next-themes/dist/types";
 import { SnackbarProvider } from "notistack";
 import { Provider } from "react-redux";
 import { store } from "@/store/store";
-import { setupAxiosInterceptors } from "@/lib/authService";
+import { setupAxiosInterceptors } from "@/api/apiClient";
 
 export interface ProvidersProps {
   children: React.ReactNode;
