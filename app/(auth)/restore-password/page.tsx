@@ -16,7 +16,7 @@ interface IFormInputs {
   email: string;
 }
 
-const schema = yup.object({
+const schema = () => yup.object({
   email: yup
     .string()
     .required("email_required")
@@ -27,12 +27,13 @@ export default function RestorePasswordPage() {
   const router = useRouter();
   const { validators } = strings;
   const { passwordReset, isLoading } = usePasswordReset();
+  const schemaInstance = schema();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormInputs>({ resolver: yupResolver(schema as any) });
+  } = useForm<IFormInputs>({ resolver: yupResolver(schemaInstance) });
 
   async function onSubmit(data: IFormInputs) {
     const result = await passwordReset(data.email);

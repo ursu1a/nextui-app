@@ -20,7 +20,7 @@ interface IFormInputs {
   passwordConfirm: string;
 }
 
-const schema = yup.object({
+const schema = () => yup.object({
   password: yup
     .string()
     .required("password_required")
@@ -36,6 +36,7 @@ export default function UpdatePasswordPage() {
   const searchParams = useSearchParams();
   const { isLoading, passwordUpdate } = usePasswordReset();
   const { validators } = strings;
+  const schemaInstance = schema();
   const { enqueueSnackbar } = useSnackbar();
   const token = searchParams.get("token") || "";
 
@@ -43,7 +44,7 @@ export default function UpdatePasswordPage() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormInputs>({ resolver: yupResolver(schema as any) });
+  } = useForm<IFormInputs>({ resolver: yupResolver(schemaInstance) });
 
   useEffect(() => {
     if (isEmpty(token)) {

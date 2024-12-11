@@ -18,30 +18,32 @@ import { GoogleLoginButton } from "@/components/auth/GoogleLoginButton";
 interface IFormInputs {
   email: string;
   password: string;
-  rememberMe: boolean;
+  rememberMe?: boolean;
 }
 
-const schema = yup.object({
-  email: yup
-    .string()
-    .required("email_required")
-    .matches(validators.emailValidator, "email_format"),
-  password: yup.string().required("password_required"),
-  rememberMe: yup.boolean(),
-});
+const schema = () =>
+  yup.object({
+    email: yup
+      .string()
+      .required("email_required")
+      .matches(validators.emailValidator, "email_format"),
+    password: yup.string().required("password_required"),
+    rememberMe: yup.boolean(),
+  });
 
 export default function LoginPage() {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const { login, isLoading } = useLogin();
   const { validators } = strings;
+  const schemaInstance = schema();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<IFormInputs>({
-    resolver: yupResolver(schema as yup.AnyObjectSchema),
+    resolver: yupResolver(schemaInstance),
   });
 
   async function onSubmit(data: IFormInputs) {
@@ -50,7 +52,7 @@ export default function LoginPage() {
         email: data.email,
         password: data.password,
       },
-      data.rememberMe
+      !!data.rememberMe
     );
     enqueueSnackbar(result.message, {
       variant: result.success ? "success" : "error",

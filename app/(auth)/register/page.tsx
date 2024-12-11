@@ -19,7 +19,7 @@ interface IFormInputs {
   password: string;
 }
 
-const schema = yup.object({
+const schema = () => yup.object({
   name: yup.string().required("name_required"),
   email: yup
     .string()
@@ -36,12 +36,12 @@ export default function RegisterPage() {
   const { enqueueSnackbar } = useSnackbar();
   const { signup, isLoading } = useRegister();
   const { validators } = strings;
-
+  const schemaInstance = schema();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormInputs>({ resolver: yupResolver(schema) });
+  } = useForm<IFormInputs>({ resolver: yupResolver(schemaInstance) });
 
   async function onSubmit(data: IFormInputs) {
     const result = await signup(data);

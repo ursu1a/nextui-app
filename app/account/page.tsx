@@ -22,13 +22,14 @@ interface IFormData {
   email: string;
 }
 
-const schema = yup.object({
-  name: yup.string().required("name_required"),
-  email: yup
-    .string()
-    .required("email_required")
-    .matches(validators.emailValidator, "email_format"),
-});
+const schema = () =>
+  yup.object({
+    name: yup.string().required("name_required"),
+    email: yup
+      .string()
+      .required("email_required")
+      .matches(validators.emailValidator, "email_format"),
+  });
 
 export default function AccountPage() {
   const router = useRouter();
@@ -36,6 +37,7 @@ export default function AccountPage() {
   const { isLoading, updateProfile, deleteAccount } = useAccount();
   const { enqueueSnackbar } = useSnackbar();
   const { validators } = strings;
+  const schemaInstance = schema();
 
   const {
     register,
@@ -43,7 +45,7 @@ export default function AccountPage() {
     reset,
     formState: { isDirty, errors },
   } = useForm<IFormData>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schemaInstance),
   });
 
   // Update form' fields
@@ -54,12 +56,13 @@ export default function AccountPage() {
     });
   }, [data]);
 
-  // Save updates
+  // Save
   async function onSubmit(data: IFormData) {
     updateProfile(data).then((result) => {
+      reset(data);
       enqueueSnackbar(result.message, {
         variant: result.success ? "success" : "error",
-      });      
+      });
     });
   }
 
@@ -78,7 +81,7 @@ export default function AccountPage() {
         router.push("/");
       }
     });
-  }
+  };
 
   return (
     <ProtectedRoute hideContent>
