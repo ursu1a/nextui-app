@@ -7,7 +7,7 @@ import { useAppDispatch } from "@/hooks/reduxHooks";
 import { initAuth } from "@/store/slices/authSlice";
 import { useApp } from "@/hooks/useApp";
 import LoadingProgress from "./feedback/LoadingProgress";
-import { setUser } from "@/store/slices/userSlice";
+import { setData } from "@/store/slices/userSlice";
 
 export default function () {
   const pathname = usePathname();
@@ -36,10 +36,14 @@ export default function () {
 
   useEffect(() => {
     if (isAuthenticated) {
-      getMe().then((userData) => dispatch(setUser({
-        name: userData?.Name,
-        email: userData?.Email,
-      })));
+      getMe().then((userData) =>
+        dispatch(
+          setData({
+            name: userData?.Name,
+            email: userData?.Email,
+          })
+        )
+      );
     }
   }, [isAuthenticated]);
 

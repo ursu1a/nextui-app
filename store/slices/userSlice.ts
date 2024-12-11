@@ -1,26 +1,26 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface UserState {
-  data: {
-    name: string;
-    email: string;
-  } | null;
+interface GenericState<T> {
+  data: T | null;
 }
 
-const initialState: UserState = {
+const initialState: GenericState<{ name: string; email: string }> = {
   data: null,
 };
 
 const userSlice = createSlice({
-  name: "user",
+  name: "generic",
   initialState,
   reducers: {
-    setUser(state, action: PayloadAction<UserState["data"]>) {
+    setData<T>(state: GenericState<T>, action: PayloadAction<T>) {
       state.data = action.payload;
+    },
+    clearData<T>(state: GenericState<T>) {
+      state.data = null;
     },
   },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setData, clearData } = userSlice.actions;
 
 export default userSlice.reducer;

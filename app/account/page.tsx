@@ -130,9 +130,11 @@ export default function AccountPage() {
               />
               <Input
                 isDisabled
+                type="password"
                 label={strings.account.password}
                 placeholder={strings.account.password_placeholder}
                 labelPlacement="outside"
+                defaultValue="password"
                 classNames={{
                   inputWrapper: ["dark:hover:bg-default-100/70"],
                 }}
