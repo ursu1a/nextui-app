@@ -1,8 +1,8 @@
-import { useState } from "react";
 import { useAppDispatch } from "./reduxHooks";
 import { setAuth } from "../store/slices/authSlice";
-import apiClient, { errorMessage } from "@/api/apiClient";
+import apiClient from "@/api/apiClient";
 import { ApiResponse } from "@/types";
+import { useApiRequest } from "./useApiRequest";
 
 interface LoginCredentials {
   email: string;
@@ -11,31 +11,21 @@ interface LoginCredentials {
 
 export const useLogin = () => {
   const dispatch = useAppDispatch();
-  const [isLoading, setIsLoading] = useState(false);
+  const { isLoading, handleApiRequest } = useApiRequest({});
 
-  const login = async (
+  const login = (
     credentials: LoginCredentials,
     rememberMe: boolean
-  ): Promise<ApiResponse> => {
-    try {
-      setIsLoading(true);
+  ): Promise<ApiResponse> =>
+    handleApiRequest(async () => {
       const response = await apiClient.post("/api/login", credentials);
       const { access_token: token } = response.data;
       dispatch(setAuth({ token }));
-      
-      setIsLoading(false);
+
       if (rememberMe) {
         localStorage.setItem("authToken", token);
       }
-      return { success: true, message: "Login successful" };
-    } catch (error) {
-      setIsLoading(false);
-      return {
-        success: false,
-        message: `Login error: ${errorMessage(error)}`,
-      };
-    }
-  };
+    }, "Login successfully");
 
   return { login, isLoading };
 };

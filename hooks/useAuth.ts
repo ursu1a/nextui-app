@@ -1,29 +1,23 @@
-// This hook returns user information and authentication state
-import { debounceDispatch } from "@/utils/functions";
-import { useAppDispatch, useAppSelector } from "./reduxHooks";
-import apiClient, { errorMessage } from "@/api/apiClient";
-import { setLoading } from "@/store/slices/appSlice";
+import { useAppSelector } from "./reduxHooks";
+import apiClient from "@/api/apiClient";
 import { ApiResponse } from "@/types";
+import { useApiRequest } from "./useApiRequest";
 
+// This hook returns user information and authentication state
 export const useAuth = () => {
-  const dispatch = useAppDispatch();
-  const debounce = debounceDispatch(dispatch);
+  const { handleApiRequest } = useApiRequest({showGlobalLoader: true});
 
   const { token, user, isAuthenticated } = useAppSelector(
     (state) => state.auth
   );
 
-  const verifyEmail = async (token: string): Promise<ApiResponse> => {
-    try {
-      dispatch(setLoading(true));
-      await apiClient.get("/api/verify-email", { params: { token } });
-      return { success: true, message: "Email is verified successfully" };
-    } catch (error) {
-      return { success: false, message: errorMessage(error) };
-    } finally {
-      debounce(setLoading(false));
-    }
-  };
+  const verifyEmail = (token: string): Promise<ApiResponse> =>
+    handleApiRequest(
+      async () => {
+        await apiClient.get("/api/verify-email", { params: { token } });
+      },
+      "Email verified successfully",
+    );
 
   return {
     token,

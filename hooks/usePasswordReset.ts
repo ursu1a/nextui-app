@@ -1,6 +1,6 @@
-import { useState } from "react";
 import { ApiResponse } from "@/types";
-import apiClient, { errorMessage } from "@/api/apiClient";
+import apiClient from "@/api/apiClient";
+import { useApiRequest } from "./useApiRequest";
 
 interface RequestedUser {
   token: string;
@@ -8,45 +8,17 @@ interface RequestedUser {
 }
 
 export const usePasswordReset = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const { isLoading, handleApiRequest } = useApiRequest({});
 
-  const passwordReset = async (email: string): Promise<ApiResponse> => {
-    try {
-      setIsLoading(true);
+  const passwordReset = (email: string): Promise<ApiResponse> =>
+    handleApiRequest(async () => {
       await apiClient.post("/api/request-reset-password", { email });
+    }, "Password reset instruction is sent by email");
 
-      setIsLoading(false);
-      return {
-        success: true,
-        message: "Password reset instructions were sent",
-      };
-    } catch (error) {
-      setIsLoading(false);
-      return {
-        success: false,
-        message: `An error occurred while resetting the password: ${errorMessage(error)}`,
-      };
-    }
-  };
-
-  const passwordUpdate = async (requestedUser: RequestedUser) => {
-    try {
-      setIsLoading(true);
+  const passwordUpdate = (requestedUser: RequestedUser): Promise<ApiResponse> =>
+    handleApiRequest(async () => {
       await apiClient.post("/api/update-password", requestedUser);
-
-      setIsLoading(false);
-      return {
-        success: true,
-        message: "Password updated successfully",
-      };
-    } catch (error) {
-      setIsLoading(false);
-      return {
-        success: false,
-        message: `An error occurred while updating the password: ${errorMessage(error)}`,
-      };
-    }
-  };
+    }, "Password updated successfully");
 
   return { isLoading, passwordReset, passwordUpdate };
 };

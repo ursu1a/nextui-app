@@ -12,11 +12,11 @@ const appSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
-    setLoading(state, action: PayloadAction<boolean>) {
+    setAppLoading(state, action: PayloadAction<boolean>) {
       state.isLoading = action.payload;
     },
   },
 });
 
-export const { setLoading } = appSlice.actions;
+export const { setAppLoading } = appSlice.actions;
 export default appSlice.reducer;

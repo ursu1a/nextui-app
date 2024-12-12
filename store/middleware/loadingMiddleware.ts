@@ -1,5 +1,5 @@
 import { Middleware } from "@reduxjs/toolkit";
-import { setLoading } from "../slices/appSlice";
+import { setAppLoading } from "../slices/appSlice";
 import { debounceDispatch } from "@/utils/functions";
 
 export const loadingMiddleware: Middleware = (store) => {
@@ -9,12 +9,12 @@ export const loadingMiddleware: Middleware = (store) => {
     // Check the action type is "authSlice"
     if (action.type.startsWith("auth/")) {
       if (action.type.endsWith("/pending")) {
-        debounce(setLoading(true));
+        debounce(setAppLoading(true));
       } else if (
         action.type.endsWith("/fulfilled") ||
         action.type.endsWith("/rejected")
       ) {
-        debounce(setLoading(false));
+        debounce(setAppLoading(false));
       }
     }
 

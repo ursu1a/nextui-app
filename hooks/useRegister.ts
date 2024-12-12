@@ -1,7 +1,6 @@
-import { useState } from "react";
-import apiClient, { errorMessage } from "@/api/apiClient";
+import apiClient from "@/api/apiClient";
 import { ApiResponse } from "@/types";
-import { AxiosError } from "axios";
+import { useApiRequest } from "./useApiRequest";
 
 interface NewUser {
   name: string;
@@ -10,22 +9,12 @@ interface NewUser {
 }
 
 export const useRegister = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const { isLoading, handleApiRequest } = useApiRequest({});
 
-  const signup = async (userData: NewUser): Promise<ApiResponse> => {
-    setIsLoading(true);
-    try {
+  const signup = (userData: NewUser): Promise<ApiResponse> =>
+    handleApiRequest(async () => {
       await apiClient.post("/api/register", userData);
-      return { success: true, message: "Register successfully" };
-    } catch (error) {
-      return {
-        success: false,
-        message: `Register error: ${errorMessage(error)}`,
-      };
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    }, "Register successfully");
 
   return { signup, isLoading };
 };
