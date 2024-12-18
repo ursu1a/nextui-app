@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import { useMe } from "@/hooks/useMe";
@@ -16,7 +16,7 @@ export default function () {
   const { isAuthenticated } = useAuth();
   const getMe = useMe();
 
-  const checkPathname = (pathname: string) => {
+  const checkPathname = useMemo(() => {
     const authPaths = [
       "/login",
       "/register",
@@ -25,10 +25,10 @@ export default function () {
       "/verify-email",
     ];
     return !authPaths.some((authPath) => authPath === pathname);
-  };
+  }, [pathname]);
 
   useEffect(() => {
-    if (checkPathname(pathname)) {
+    if (checkPathname) {
       // prevent initialize auth until some authorization processes
       dispatch(initAuth());
     }
